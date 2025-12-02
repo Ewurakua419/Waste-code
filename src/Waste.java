@@ -131,7 +131,7 @@ public class Waste {
         addCount();
     }
     public String checkType(){
-        String newType;
+        String newType="";
         if(color.toLowerCase().equals("black") && type==types.PLASTIC && item.toLowerCase().equals("bag")){
             setIsRecyclable(false);
             System.out.println("Must not be recycled");
@@ -228,6 +228,7 @@ public class Waste {
             }
         }
         else{//checking to see if organic or paper
+            newType="";
             if (lightSpectra>520 && lightSpectra<680){
                 type=types.ORGANIC;
             }
