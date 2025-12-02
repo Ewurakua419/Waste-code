@@ -12,7 +12,11 @@ public class Waste {
     private String item;
     private boolean isSinkable;
     private boolean isWaterproof;
+    private int lightSpectra;//in nm
     //Getters and setters
+    public void setLightSpectra(int lightSpectra){
+        this.lightSpectra=lightSpectra;
+    }
     public void setIsWterproof(boolean isWaterproof){
         this.isWaterproof=isWaterproof;
     }
@@ -78,6 +82,9 @@ public class Waste {
         return this.weight;
     }
 
+    public int getLightSpectra(){
+        return this.lightSpectra;
+    }
     public boolean getIsMagnetic(){
         return this.isMagnetic;
     }
@@ -221,7 +228,12 @@ public class Waste {
             }
         }
         else{//checking to see if organic or paper
-            
+            if (lightSpectra>520 && lightSpectra<680){
+                type=types.ORGANIC;
+            }
+            else{
+                type=types.PAPER;
+            }
         }
         
 
