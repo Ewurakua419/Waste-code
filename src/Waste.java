@@ -235,13 +235,6 @@ public class Waste {
                 type=types.PAPER;
             }
         }
-        
-
-        
-
-            
-        
-
         return getType();
     }
 }
