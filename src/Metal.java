@@ -1,20 +1,19 @@
-public class MetalWaste {
+public class Metal{
     private static int metalCount = 0;  // counts how many metal items have ever been dumped
 
-    // ==== INSTANCE FIELDS ====
-    private String metalType;           // e.g., "Aluminum", "Steel", "Copper"
-    private double weight;              // weight in kilograms
-    private int yearsUsed;              // used to determine rust probability
-    private int binCapacity;            // maximum allowed metal items in the bin
-    private int currentBinLoad;         // current number of metal items inside the bin
+    // variables
+    private String metalType;          
+    private double weight;// weight in kilograms
+    private int yearsUsed;// used to determine rust probability
+    private int binCapacity;// maximum allowed metal items in the bin
+    private int currentBinLoad;// current number of metal items inside the bin
 
-    private double rustLevel;           // calculated based on yearsUsed
+    private double rustLevel;// calculated based on yearsUsed
     private boolean requiresImmediateRecycling; // true if rust is too high
-    private boolean binFullAlert;       // true if bin is full after adding this item
+    private boolean binFullAlert;// true if bin is full after adding this item
 
-    // ==== CONSTRUCTOR ====
-    public MetalWaste(String metalType, double weight, int yearsUsed,
-                      int binCapacity, int currentBinLoad) {
+    // constructor
+    public Metal(String metalType, double weight, int yearsUsed, int binCapacity, int currentBinLoad) {
 
         this.metalType = metalType;
         this.weight = weight;
@@ -54,7 +53,7 @@ public class MetalWaste {
         return rustLevel > 0.6;
     }
 
-    // ==== FEATURE 3: Check if the bin is full ====
+    //Check if the bin is full
     /**
      * If current load + this item > capacity,
      * the system triggers an alert for the manager.
@@ -64,12 +63,20 @@ public class MetalWaste {
     }
 
     // ==== GETTERS ====
-    public double getRustLevel() { return rustLevel; }
-    public boolean isImmediateRecyclingRequired() { return requiresImmediateRecycling; }
-    public boolean isBinFull() { return binFullAlert; }
-    public static int getMetalCount() { return metalCount; }
+    public double getRustLevel() { 
+        return rustLevel; 
+    }
+    public boolean isImmediateRecyclingRequired() {
+        return requiresImmediateRecycling; 
+    }
+    public boolean isBinFull() {
+        return binFullAlert;
+    }
+    public static int getMetalCount() {
+        return metalCount; 
+    }
 
-    // ==== SUMMARY METHOD ====
+    //tostring
 
     @Override
     public String toString() {

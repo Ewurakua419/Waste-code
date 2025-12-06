@@ -1,4 +1,4 @@
-public class PaperWaste {
+public class Paper{
     private static int paperCount = 0; // total number of paper items dumped
 
     // ==== INSTANCE FIELDS ====
@@ -13,8 +13,8 @@ public class PaperWaste {
     private boolean eligibleForReuse; // if clean & dry enough
     private boolean binFullAlert;
 
-    // ==== CONSTRUCTOR ====
-    public PaperWaste(String paperType, double weight, double moisturePercentage,
+    //constructor
+    public Paper(String paperType, double weight, double moisturePercentage,
             int binCapacity, int currentBinLoad) {
 
         this.paperType = paperType;
@@ -36,7 +36,7 @@ public class PaperWaste {
         this.binFullAlert = checkBinStatus();
     }
 
-    // ==== FEATURE 1: Check contamination ====
+    // FEATURE 1: Check contamination 
     /**
      * If moisture is above 35%, paper is considered contaminated.
      * Contaminated paper can no longer be recycled and must be "diverted"
@@ -46,7 +46,7 @@ public class PaperWaste {
         return moisturePercentage > 35.0;
     }
 
-    // ==== FEATURE 2: Decide if paper can be reused ====
+    // Decide if paper can be reused 
     /**
      * Very dry and unsoiled paper can be reused for art, note-making,
      * or packaging before recycling.
@@ -57,12 +57,12 @@ public class PaperWaste {
         return moisturePercentage <= 10.0 && !isContaminated;
     }
 
-    // ==== FEATURE 3: Check if the bin is full ====
+    // Check if the bin is full
     private boolean checkBinStatus() {
         return (currentBinLoad + 1) >= binCapacity;
     }
 
-    // ==== GETTERS ====
+    //GETTERS
     public boolean isContaminated() {
         return isContaminated;
     }

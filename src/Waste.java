@@ -76,6 +76,9 @@ public class Waste {
         }
     
     }
+    public String getNewType(){
+        return newType;
+    }
 
     public double getWeight(){
         return this.weight;
