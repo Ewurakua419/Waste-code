@@ -1,8 +1,8 @@
 enum types{
-    METAL, PLASTIC, PAPER, UNKNOWN, OTHER, ORGANIC
+    METAL, PLASTIC, PAPER, UNKNOWN,  ORGANIC
 }
 public class Waste {
-    private types type;
+    private types type=types.UNKNOWN;
     private double weight;
     private boolean isMagnetic;
     private double density;
@@ -13,6 +13,7 @@ public class Waste {
     private boolean isSinkable;
     private boolean isWaterproof;
     private int lightSpectra;//in nm
+    private String newType="";
     //Getters and setters
     public void setLightSpectra(int lightSpectra){
         this.lightSpectra=lightSpectra;
@@ -69,9 +70,7 @@ public class Waste {
             case types.PLASTIC:
                 return "Plastic";
             
-            case types.OTHER:
-                return "Other";
-        
+            
             default:
                 return "Unknown";
         }
@@ -131,13 +130,15 @@ public class Waste {
         addCount();
     }
     public String checkType(){
-        String newType="";
+        
         if(color.toLowerCase().equals("black") && type==types.PLASTIC && item.toLowerCase().equals("bag")){
+            
             setIsRecyclable(false);
             System.out.println("Must not be recycled");
             newType="Plastic, must not be recycled";
         }
-        if (isWaterproof){//checks if either plastic or metal
+        else if (isWaterproof){//checks if either plastic or metal
+            
             if(isSinkable ){
                 if(isMagnetic){//for magnetic metals
                     if (density==7.87){
@@ -207,6 +208,9 @@ public class Waste {
                         newType="PVC(#3) ";
                         type=types.METAL;
                     }
+                    else{
+                        newType="Unknown";
+                    }
                     
 
                 }  
@@ -237,6 +241,27 @@ public class Waste {
             }
         }
         return getType();
+    }
+
+    public void createObjects(){
+        switch (type) {
+            case PLASTIC:
+                //Plastic p1= new Plastic();
+                break;
+            case METAL:
+                //create metal class
+                break;
+            case PAPER:
+                //create paper class
+                break;
+            case ORGANIC:
+                // create organic class
+                break;
+             
+            default:
+                //leave as unknown
+                break;
+        }
     }
 }
 
