@@ -2,9 +2,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-public class WasteManager{
+public class WasteManager implements FileOperations{
     ArrayList<String> wasteBinstr=new ArrayList<>();
     ArrayList<Paper>papers=new ArrayList<>();
     ArrayList<Plastic> plastics=new ArrayList<>();
