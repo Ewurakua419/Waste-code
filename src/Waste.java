@@ -3,9 +3,9 @@ enum types{
 }
 public class Waste {
     private types type=types.UNKNOWN;
-    private double weight;
+    private double weight;//in grams
     private boolean isMagnetic;
-    private double density;
+    private double density;// in g/cm3
     private boolean isRecyclable;
     private static int counter;
     private String color;
@@ -133,6 +133,32 @@ public class Waste {
         this.isCompostable=isCompostable;
         addCount();
     }
+    public Waste( double weight, double density, boolean isMagnetic, boolean isReyclable, String item, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
+        this.type=types.UNKNOWN;
+        this.weight=weight;
+        this.density=density;
+        this.isMagnetic=isMagnetic;
+        this.isRecyclable=isReyclable;
+        this.item=item;
+        this.isSinkable=isSinkable;
+        this.isWaterproof=isWaterproof;
+        this.isCompostable=isCompostable;
+        addCount();
+    }
+
+    public Waste( double weight, double density, int lightSpectra,String color, boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
+        this.type=types.UNKNOWN;
+        this.weight=weight;
+        this.density=density;
+        this.lightSpectra=lightSpectra;
+        this.isMagnetic=isMagnetic;
+        this.color=color;
+        this.isRecyclable=isReyclable;
+        this.isSinkable=isSinkable;
+        this.isWaterproof=isWaterproof;
+        this.isCompostable=isCompostable;
+        addCount();
+    }
 
     public Waste( double weight, double density, int lightSpectra, boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
         this.type=types.UNKNOWN;
@@ -146,11 +172,25 @@ public class Waste {
         this.isCompostable=isCompostable;
         addCount();
     }
+    
     public Waste( double weight, double density,  boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
         this.type=types.UNKNOWN;
         this.weight=weight;
         this.density=density;
         this.isMagnetic=isMagnetic;
+        this.isRecyclable=isReyclable;
+        this.isSinkable=isSinkable;
+        this.isWaterproof=isWaterproof;
+        this.isCompostable=isCompostable;
+        addCount();
+    }
+
+    public Waste( double weight, double density, String color, boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
+        this.type=types.UNKNOWN;
+        this.weight=weight;
+        this.density=density;
+        this.isMagnetic=isMagnetic;
+        this.color=color;
         this.isRecyclable=isReyclable;
         this.isSinkable=isSinkable;
         this.isWaterproof=isWaterproof;
