@@ -1,13 +1,13 @@
-public class Plastic extends Waste {
+import java.util.ArrayList;
+
+public class Plastic extends Waste implements Recycable{
     private String type;
     private boolean meltable;
-    private boolean isRecyclable;
 
-    public Plastic (String type, boolean meltable, boolean isRecyclable){
+    public Plastic (String type, boolean meltable){
         super(types.PLASTIC);
         this.type = type;
         this.meltable = meltable;
-        this.isRecyclable = isRecyclable;
     }
 
     
@@ -22,18 +22,21 @@ public class Plastic extends Waste {
         this.meltable = meltable;
     }
     
-    public void setRecyclable(boolean isRecyclable){
-        this.isRecyclable = isRecyclable;
-    }
     
     public String getType(){
         return type;
     }
-    public boolean getIsRecyclable(){
-        return isRecyclable;
-    }
     
     public boolean getMeltable(){
         return meltable;
+    }
+    @Override
+    public boolean isRecycable(){
+        if (type=="HDPE (High Density Polyethylene)"|| type=="LDPE(#4)" || type=="PP(#5)"){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

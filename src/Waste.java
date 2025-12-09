@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 enum types{
     METAL, PLASTIC, PAPER, UNKNOWN,  ORGANIC
 }
@@ -6,7 +11,6 @@ public class Waste {
     private double weight;//in grams
     private boolean isMagnetic;
     private double density;// in g/cm3
-    private boolean isRecyclable;
     private static int counter;
     private String color;
     private String item;
@@ -15,6 +19,12 @@ public class Waste {
     private int lightSpectra;//in nm
     private String newType="";
     private boolean isCompostable;
+    private boolean isMeltable;
+    private ArrayList<Waste> wasteBin;
+    
+    private ArrayList<Paper> plastics;
+    private ArrayList<Metal> metal;
+    private ArrayList<Organic> organics;
     //Getters and setters
     public void setLightSpectra(int lightSpectra){
         this.lightSpectra=lightSpectra;
@@ -47,10 +57,6 @@ public class Waste {
 
     public void setDensity(double density){
         this.density=density;
-    }
-
-    public void setIsRecyclable(boolean isRecyclable){
-        this.isRecyclable=isRecyclable;
     }
 
     public static void addCount(){
@@ -96,8 +102,15 @@ public class Waste {
         return this.density;
     }
 
-    public boolean getIsRecyclable(){
-        return this.isRecyclable;
+    public boolean getIsMeltable(){
+        return this.isMeltable;
+    }
+
+    public boolean getIsCompostable(){
+        return this.isCompostable;
+    }
+    public types getType(boolean val){
+        return type;
     }
 
     public static int getCount(){
@@ -120,102 +133,9 @@ public class Waste {
     public Waste(types type){
         this.type=type;
     }
-    public Waste( double weight, double density, boolean isMagnetic, boolean isReyclable, String color, String item, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=types.UNKNOWN;
-        this.weight=weight;
-        this.density=density;
-        this.isMagnetic=isMagnetic;
-        this.isRecyclable=isReyclable;
-        this.color=color;
-        this.item=item;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
-    public Waste( double weight, double density, boolean isMagnetic, boolean isReyclable, String item, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=types.UNKNOWN;
-        this.weight=weight;
-        this.density=density;
-        this.isMagnetic=isMagnetic;
-        this.isRecyclable=isReyclable;
-        this.item=item;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
-
-    public Waste( double weight, double density, int lightSpectra,String color, boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=types.UNKNOWN;
-        this.weight=weight;
-        this.density=density;
-        this.lightSpectra=lightSpectra;
-        this.isMagnetic=isMagnetic;
-        this.color=color;
-        this.isRecyclable=isReyclable;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
-
-    public Waste( double weight, double density, int lightSpectra, boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=types.UNKNOWN;
-        this.weight=weight;
-        this.density=density;
-        this.lightSpectra=lightSpectra;
-        this.isMagnetic=isMagnetic;
-        this.isRecyclable=isReyclable;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
-    
-    public Waste( double weight, double density,  boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=types.UNKNOWN;
-        this.weight=weight;
-        this.density=density;
-        this.isMagnetic=isMagnetic;
-        this.isRecyclable=isReyclable;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
-
-    public Waste( double weight, double density, String color, boolean isMagnetic, boolean isReyclable, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=types.UNKNOWN;
-        this.weight=weight;
-        this.density=density;
-        this.isMagnetic=isMagnetic;
-        this.color=color;
-        this.isRecyclable=isReyclable;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
-
-    public Waste(types type, double weight, double density, boolean isMagnetic, boolean isReyclable, String color, String item, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
-        this.type=type;
-        this.weight=weight;
-        this.density=density;
-        this.isMagnetic=isMagnetic;
-        this.isRecyclable=isReyclable;
-        this.color=color;
-        this.item=item;
-        this.isSinkable=isSinkable;
-        this.isWaterproof=isWaterproof;
-        this.isCompostable=isCompostable;
-        addCount();
-    }
     public String checkType(){
-        
+        boolean isMeltable;
         if(color.toLowerCase().equals("black") && type==types.PLASTIC && item.toLowerCase().equals("bag")){
-            
-            setIsRecyclable(false);
             System.out.println("Must not be recycled");
             newType="Plastic, must not be recycled";
         }
@@ -288,7 +208,7 @@ public class Waste {
                     }
                     else if (density>=1.30 && density<1.45){
                         newType="PVC(#3) ";
-                        type=types.METAL;
+                        type=types.PLASTIC;
                     }
                     else{
                         newType="Unknown";
@@ -311,7 +231,9 @@ public class Waste {
                     newType="PS(Foam)";//foam
                 }
                 type=types.PLASTIC;
+                
             }
+            
         }
         else{//checking to see if organic or paper
             newType="";
@@ -328,27 +250,126 @@ public class Waste {
                 type=types.PAPER;
             }
         }
+        switch (type) {
+                case PLASTIC:
+                    Plastic p1= new Plastic(newType,isMeltable);
+                    break;
+                case METAL:
+                    Metal metal= new Metal(color, weight, lightSpectra);
+                    break;
+                case PAPER:
+                    Paper paper= new Paper(color, weight);
+                    break;
+                case ORGANIC:
+                    Organic organic=new Organic(newType, isCompostable);
+                    break;
+                
+                default:
+                    //leave as unknown
+                    break;
+        }
         return getType();
     }
+   
+    public Waste( types type, double weight, double density, int lightSpectra,String color, String item,boolean isMagnetic, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
+        this.type=type;
+        this.weight=weight;
+        this.density=density;
+        this.lightSpectra=lightSpectra;
+        this.isMagnetic=isMagnetic;
+        this.color=color;
+        this.item=item;
+        this.isSinkable=isSinkable;
+        this.isWaterproof=isWaterproof;
+        this.isCompostable=isCompostable;
+        addCount();
+    }
 
-    public void createObjects(){
-        switch (type) {
-            case PLASTIC:
-                //Plastic p1= new Plastic();
-                break;
-            case METAL:
-                //create metal class
-                break;
-            case PAPER:
-                //create paper class
-                break;
-            case ORGANIC:
-                // create organic class
-                break;
-             
-            default:
-                //leave as unknown
-                break;
+
+
+    
+    
+
+    public void loadFromFile(String filename){
+        String typeStr;
+        types type= types.UNKNOWN;
+        double weight=0;
+        boolean isMagnetic=false;
+        double density=0;
+        String color="";
+        String item="";
+        boolean isSinkable=false;
+        boolean isWaterproof=false;
+        int lightSpectra=0;//in nm
+        boolean isCompostable=false;
+        try (Scanner scanner= new Scanner(new File(filename))){
+            while (scanner.hasNextLine()){
+                String line= scanner.nextLine();
+                String[] lines=line.split(",");
+                System.out.println(line);
+                if (lines.length==11){
+                    typeStr=lines[0].strip().toLowerCase();
+                    switch (typeStr) {
+                        case "paper":
+                            type=types.PAPER;
+                    
+                        case "metal":
+                            type=types.METAL;
+                        
+                        case "organic":
+                            type=types.ORGANIC;
+                        
+                        case "plastic":
+                            type=types.PLASTIC;
+                        
+                        
+                        default:
+                            type=types.UNKNOWN;
+                    }
+                    weight=Double.parseDouble(lines[1]);
+                    density=Double.parseDouble(lines[2]);
+                    lightSpectra=Integer.parseInt(lines[3]);
+                    color=lines[4];
+                    item=lines[5];
+                    if (lines[6].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                        isMagnetic=true;
+                    }
+                    else if (lines[6].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                        isMagnetic=false;
+                    }
+                    if (lines[7].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                        isSinkable=true;
+                    }
+                    else if (lines[7].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                        isSinkable=false;
+                    }
+                    if (lines[8].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                        isWaterproof=true;
+                    }
+                    else if (lines[8].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                        isWaterproof=false;
+                    }
+
+                    if (lines[9].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                        isCompostable=true;
+                    }
+                    else if (lines[9].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                        isCompostable=false;
+                    }
+        }
+
+                }
+                try {
+                    Waste waste=new Waste(type, weight, density, lightSpectra, color, item, isMagnetic,  isSinkable, isWaterproof, isCompostable);
+                    wasteBin.add(waste);
+                } catch (Exception e) {
+                    System.out.println("Not a Waste object");
+                }
+                
+                
+            
+        }catch(IOException e){
+            System.out.println("Error in loading");
         }
     }
 }

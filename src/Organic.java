@@ -1,11 +1,16 @@
-public class Organic extends Waste{
+import java.util.ArrayList;
+
+public class Organic extends Waste {
 
     private boolean isCompostable;
     private String type;
+   
+    private ArrayList<Organic> organicList = new ArrayList<>();
 
+    
     //constructors
 
-    Organic(boolean isCompostable, String type ){
+    Organic(String type, boolean isCompostable ){
         super(types.ORGANIC);
         this.type = type;
         this.isCompostable = isCompostable;
@@ -30,6 +35,20 @@ public class Organic extends Waste{
     public void setIsCompostable(boolean isCompostable){
         this.isCompostable = isCompostable;
     }
+
+    // Add an Organic item to the list
+    public void addOrganic(Organic o) {
+        organicList.add(o);
+    }
+
+    @Override
+
+    public String toString(){
+        return "ORGANIC WASTE"+
+                "\nType: " + type +
+                "\nIs Compostable: " + isCompostable;
+    }
+
 
     
 

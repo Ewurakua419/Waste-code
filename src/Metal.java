@@ -1,92 +1,69 @@
-public class Metal{
-    private static int metalCount = 0;  // counts how many metal items have ever been dumped
+import java.util.*;
 
-    // variables
-    private String metalType;          
-    private double weight;// weight in kilograms
-    private int yearsUsed;// used to determine rust probability
-    private int binCapacity;// maximum allowed metal items in the bin
-    private int currentBinLoad;// current number of metal items inside the bin
+public class Metal extends Waste {
 
-    private double rustLevel;// calculated based on yearsUsed
-    private boolean requiresImmediateRecycling; // true if rust is too high
-    private boolean binFullAlert;// true if bin is full after adding this item
+    private String metalType;       // e.g., Steel, Aluminum
+    private boolean magnetic;       
+    private boolean isRusted;       
 
-    // constructor
-    public Metal(String metalType, double weight, int yearsUsed, int binCapacity, int currentBinLoad) {
+    // Collections
+    private static List<Metal> allMetals = new ArrayList<>();
+    private static Map<String, List<Metal>> magneticCategories = new TreeMap<>();
+    private static final List<String> MAGNETIC_METALS = Arrays.asList("iron", "steel", "nickel", "cobalt");
+    private static final List<String> NON_MAGNETIC_METALS = Arrays.asList("aluminum", "copper", "titanium", "lead", "tin");
 
+    // Constructor
+    public Metal(String metalType, double weight, boolean magnetic, int LightSpectrum) {
+        super(types.METAL);
+        setLightSpectra(LightSpectrum);
         this.metalType = metalType;
-        this.weight = weight;
-        this.yearsUsed = yearsUsed;
-        this.binCapacity = binCapacity;
-        this.currentBinLoad = currentBinLoad;
 
-        // Increase global count
-        metalCount++;
+        // Detect magnetism 
+        this.magnetic = detectMagnetism(metalType);
 
-        // Determine rust and behavior
-        this.rustLevel = calculateRustLevel();
-        this.requiresImmediateRecycling = determineRecyclingNeed();
-        this.binFullAlert = checkBinStatus();
-    }
+        // Rust detection 
+        this.isRusted = checkRust(getLightSpectra());
 
-    // ==== FEATURE 1: Determine rust level ====
-    /**
-     * - Fresh metals (0-1 yrs) → low rust
-     * - Long-used metals have higher rust
-     *
-     * This matters because the recycling facility sorts metals
-     * differently depending on corrosion.
-     */
-    private double calculateRustLevel() {
-        double level = yearsUsed * 0.15;  // 15% rust per year
-        return Math.min(level, 1.0);      // rust capped at 100%
+        // Override recyclable 
+        isRecyclable(!isRusted);
+
+        storeInCollections();
+        Waste.addCount();
     }
 
-    // ==== FEATURE 2: Decide if immediate recycling is needed ====
-    /**
-     * If rust > 0.6, the system decides this item cannot wait long.
-     * This informs the waste manager to push it to the "Priority Queue"
-     * before it contaminates other metals.
-     */
-    private boolean determineRecyclingNeed() {
-        return rustLevel > 0.6;
+    // Rust detection using wavelength (600-700 nm = rusted)
+    private boolean checkRust(double wavelength) {
+        return wavelength >= 600 && wavelength <= 700;
     }
 
-    //Check if the bin is full
-    /**
-     * If current load + this item > capacity,
-     * the system triggers an alert for the manager.
-     */
-    private boolean checkBinStatus() {
-        return (currentBinLoad + 1) >= binCapacity;
+    private boolean detectMagnetism(String typeName) {
+        String cleaned = typeName.trim().toLowerCase();
+        if (MAGNETIC_METALS.stream().anyMatch(m -> m.equalsIgnoreCase(cleaned))) return true;
+        if (NON_MAGNETIC_METALS.stream().anyMatch(m -> m.equalsIgnoreCase(cleaned))) return false;
+        return false; // default
     }
 
-    // ==== GETTERS ====
-    public double getRustLevel() { 
-        return rustLevel; 
-    }
-    public boolean isImmediateRecyclingRequired() {
-        return requiresImmediateRecycling; 
-    }
-    public boolean isBinFull() {
-        return binFullAlert;
-    }
-    public static int getMetalCount() {
-        return metalCount; 
-    }
+    private void storeInCollections() {
+        allMetals.add(this);
 
-    //tostring
+        String key = metalType.toLowerCase();
+        magneticCategories.putIfAbsent(key, new ArrayList<>());
+        magneticCategories.get(key).add(this);
+    }
 
     @Override
     public String toString() {
-        return "---- METAL WASTE RECORD ----\n" +
-               "Type: " + metalType + "\n" +
-               "Weight: " + weight + " kg\n" +
-               "Years Used: " + yearsUsed + "\n" +
-               "Rust Level: " + rustLevel + "\n" +
-               "Requires Immediate Recycling: " + requiresImmediateRecycling + "\n" +
-               "Bin Full After Dump: " + binFullAlert + "\n" +
-               "Total Metal Items Dumped So Far: " + metalCount + "\n";
+        return "Metal {" +
+               "Type=" + metalType +
+               ", Weight=" + getWeight() +
+               ", Magnetic=" + magnetic +
+               ", Rusted=" + isRusted +
+               ", Recyclable=" + getIsRecyclable() +
+               "}";
+    }
+
+    @Override
+    public boolean isRecycable(boolean val){
+        return val;
     }
 }
