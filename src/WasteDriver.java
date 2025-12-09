@@ -20,7 +20,6 @@ public class WasteDriver {
         boolean isSinkable=false;
         boolean isWaterproof=false;
         int lightSpectra=0;//in nm
-        String newType="";
         boolean isCompostable=false;
         //start with asking what the user knows before asking for their inputs
         Scanner values= new Scanner(System.in);
