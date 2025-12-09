@@ -1,7 +1,7 @@
-public class Paper{
+public class Paper extends Waste{
     private static int paperCount = 0; // total number of paper items dumped
 
-    // ==== INSTANCE FIELDS ====
+    // INSTANCE FIELDS 
     private String paperType; // e.g., "Newspaper", "Cardboard", "Office Paper"
     private double weight; // weight in kilograms
     private double moisturePercentage; // determines contamination level
@@ -14,9 +14,8 @@ public class Paper{
     private boolean binFullAlert;
 
     //constructor
-    public Paper(String paperType, double weight, double moisturePercentage,
-            int binCapacity, int currentBinLoad) {
-
+    public Paper(String paperType, double weight, double moisturePercentage,int binCapacity, int currentBinLoad) {
+        super(types.PAPER);
         this.paperType = paperType;
         this.weight = weight;
         this.moisturePercentage = moisturePercentage;

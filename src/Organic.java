@@ -1,4 +1,4 @@
-public class Organic{
+public class Organic extends Waste{
 
     private boolean isCompostable;
     private String type;
@@ -6,6 +6,7 @@ public class Organic{
     //constructors
 
     Organic(boolean isCompostable, String type ){
+        super(types.ORGANIC);
         this.type = type;
         this.isCompostable = isCompostable;
     }
