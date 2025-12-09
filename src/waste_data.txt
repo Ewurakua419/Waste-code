@@ -1,0 +1,1 @@
+paper,15.2,0.80,450,white,notebook,false,false,false,false,

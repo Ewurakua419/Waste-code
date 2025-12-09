@@ -4,7 +4,8 @@ public class Metal extends Waste {
 
     private String metalType;       // e.g., Steel, Aluminum
     private boolean magnetic;       
-    private boolean isRusted;       
+    private boolean isRusted; 
+    private boolean isRecyclable;      
 
     // Collections
     private static List<Metal> allMetals = new ArrayList<>();
@@ -23,9 +24,6 @@ public class Metal extends Waste {
 
         // Rust detection 
         this.isRusted = checkRust(getLightSpectra());
-
-        // Override recyclable 
-        isRecyclable(!isRusted);
 
         storeInCollections();
         Waste.addCount();
@@ -58,12 +56,6 @@ public class Metal extends Waste {
                ", Weight=" + getWeight() +
                ", Magnetic=" + magnetic +
                ", Rusted=" + isRusted +
-               ", Recyclable=" + getIsRecyclable() +
-               "}";
-    }
-
-    @Override
-    public boolean isRecycable(boolean val){
-        return val;
+                "}";
     }
 }

@@ -20,11 +20,7 @@ public class Waste {
     private String newType="";
     private boolean isCompostable;
     private boolean isMeltable;
-    private ArrayList<Waste> wasteBin;
     
-    private ArrayList<Paper> plastics;
-    private ArrayList<Metal> metal;
-    private ArrayList<Organic> organics;
     //Getters and setters
     public void setLightSpectra(int lightSpectra){
         this.lightSpectra=lightSpectra;
@@ -295,6 +291,7 @@ public class Waste {
     }
 
 
+   
     
     
 
