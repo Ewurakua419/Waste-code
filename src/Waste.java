@@ -19,7 +19,6 @@ public class Waste {
     private int lightSpectra;//in nm
     private String newType="";
     private boolean isCompostable;
-    private boolean isMeltable;
     
     //Getters and setters
     public void setLightSpectra(int lightSpectra){
@@ -98,10 +97,6 @@ public class Waste {
         return this.density;
     }
 
-    public boolean getIsMeltable(){
-        return this.isMeltable;
-    }
-
     public boolean getIsCompostable(){
         return this.isCompostable;
     }
@@ -130,7 +125,6 @@ public class Waste {
         this.type=type;
     }
     public String checkType(){
-        boolean isMeltable;
         if(color.toLowerCase().equals("black") && type==types.PLASTIC && item.toLowerCase().equals("bag")){
             System.out.println("Must not be recycled");
             newType="Plastic, must not be recycled";
@@ -248,10 +242,10 @@ public class Waste {
         }
         switch (type) {
                 case PLASTIC:
-                    Plastic p1= new Plastic(newType,isMeltable);
+                    Plastic p1= new Plastic(newType);
                     break;
                 case METAL:
-                    Metal metal= new Metal(color, weight, lightSpectra);
+                    Metal metal= new Metal(newType,  weight, isMagnetic, lightSpectra);
                     break;
                 case PAPER:
                     Paper paper= new Paper(color, weight);
@@ -267,7 +261,7 @@ public class Waste {
         return getType();
     }
    
-    public Waste( types type, double weight, double density, int lightSpectra,String color, String item,boolean isMagnetic, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
+    public Waste( types type, double weight, double density, int lightSpectra, String color, String item,boolean isMagnetic, boolean isSinkable, boolean isWaterproof, boolean isCompostable){
         this.type=type;
         this.weight=weight;
         this.density=density;
@@ -295,7 +289,7 @@ public class Waste {
     
     
 
-    public void loadFromFile(String filename){
+    public void loadFromFile(String filename, ArrayList<Waste> wasteBin){
         String typeStr;
         types type= types.UNKNOWN;
         double weight=0;
@@ -316,64 +310,66 @@ public class Waste {
                     typeStr=lines[0].strip().toLowerCase();
                     switch (typeStr) {
                         case "paper":
-                            type=types.PAPER;
-                    
+                            type = types.PAPER;
+                            break;
                         case "metal":
-                            type=types.METAL;
-                        
+                            type = types.METAL;
+                            break;
                         case "organic":
-                            type=types.ORGANIC;
-                        
+                            type = types.ORGANIC;
+                            break;
                         case "plastic":
-                            type=types.PLASTIC;
-                        
-                        
+                            type = types.PLASTIC;
+                            break;
                         default:
-                            type=types.UNKNOWN;
+                            type = types.UNKNOWN;
                     }
+
                     weight=Double.parseDouble(lines[1]);
                     density=Double.parseDouble(lines[2]);
                     lightSpectra=Integer.parseInt(lines[3]);
                     color=lines[4];
                     item=lines[5];
-                    if (lines[6].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                    if (lines[6].toLowerCase().equals("true")  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
                         isMagnetic=true;
                     }
-                    else if (lines[6].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                    else if (lines[6].toLowerCase().equals("false")){// converts the vake to the valew to a boolean value false if inputs are no/false or n
                         isMagnetic=false;
                     }
-                    if (lines[7].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                    if (lines[7].toLowerCase().equals("true")  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
                         isSinkable=true;
                     }
-                    else if (lines[7].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                    else if (lines[7].toLowerCase().equals("false")){// converts the vake to the valew to a boolean value false if inputs are no/false or n
                         isSinkable=false;
                     }
-                    if (lines[8].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                    if (lines[8].toLowerCase().equals("true")  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
                         isWaterproof=true;
                     }
-                    else if (lines[8].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                    else if (lines[8].toLowerCase().equals("false")){// converts the vake to the valew to a boolean value false if inputs are no/false or n
                         isWaterproof=false;
                     }
 
-                    if (lines[9].toLowerCase()=="true"  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
+                    if (lines[9].toLowerCase().equals("true")  ){//converts the value to a boolean value true if the inputs are yes/ y/ true
                         isCompostable=true;
                     }
-                    else if (lines[9].toLowerCase()=="false"){// converts the vake to the valew to a boolean value false if inputs are no/false or n
+                    else if (lines[9].toLowerCase().equals("false")){// converts the vake to the valew to a boolean value false if inputs are no/false or n
                         isCompostable=false;
                     }
-        }
+        
 
-                }
-                try {
-                    Waste waste=new Waste(type, weight, density, lightSpectra, color, item, isMagnetic,  isSinkable, isWaterproof, isCompostable);
-                    wasteBin.add(waste);
-                } catch (Exception e) {
-                    System.out.println("Not a Waste object");
-                }
                 
+                    try {
+                        Waste waste=new Waste(type, weight, density, lightSpectra, color, item, isMagnetic,  isSinkable, isWaterproof, isCompostable);
+                        wasteBin.add(waste);
+                    } catch (Exception e) {
+                        System.out.println("Not a Waste object");
+                    }
+                }
+            }    
                 
             
-        }catch(IOException e){
+        }
+        catch(IOException e){
             System.out.println("Error in loading");
         }
     }

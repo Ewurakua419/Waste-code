@@ -45,8 +45,8 @@ public class Organic extends Waste {
 
     public String toString(){
         return "ORGANIC WASTE"+
-                "\nType: " + type +
-                "\nIs Compostable: " + isCompostable;
+                "{ Type: " + type +
+                "Is Compostable: " + isCompostable+"}";
     }
 
 

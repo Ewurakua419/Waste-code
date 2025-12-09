@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Metal extends Waste {
+public class Metal extends Waste{
 
     private String metalType;       // e.g., Steel, Aluminum
     private boolean magnetic;       
