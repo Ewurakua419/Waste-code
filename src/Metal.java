@@ -4,8 +4,7 @@ public class Metal extends Waste {
 
     private String metalType;       // e.g., Steel, Aluminum
     private boolean magnetic;       
-    private boolean isRusted; 
-    private boolean isRecyclable;      
+    private boolean isRusted;    
 
     // Collections
     private static List<Metal> allMetals = new ArrayList<>();
