@@ -285,6 +285,14 @@ public class Waste {
         addCount();
     }
 
+    @Override
+    public String toString(){
+        return "WASTE ITEM"+"Type: " + type +"Weight (g): " + weight +"Density (g/cm3): " + density+
+                "Light Spectra (nm): " + lightSpectra +"Color: " + color +"Item: " + item +"Is Magnetic: " + isMagnetic +
+                "Is Sinkable: " + isSinkable +
+                "Is Waterproof: " + isWaterproof +
+                "Is Compostable: " + isCompostable;
+    }
 
 
     

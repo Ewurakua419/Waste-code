@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Plastic extends Waste implements Recycable{
     private String type;
@@ -38,5 +37,14 @@ public class Plastic extends Waste implements Recycable{
         else{
             return false;
         }
+    }
+    @Override
+    public String toString() {
+        return "Plastic {" +
+               "Type=" + type +
+               ", Weight=" + getWeight() +
+               ", Meltable=" + meltable +
+               ", Recyclable=" + isRecycable() +
+               "}";
     }
 }
