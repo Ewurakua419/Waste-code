@@ -1,18 +1,60 @@
-## Getting Started
+To access the programmes via the command line interface, 
+Download the zip file, then unzip it into your chosen filepath
+Identify the filepath in which it is saved, 
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Access the POWERSHELL
+then copy the filepath like so
 
-## Folder Structure
+Example: If saved in downloads
 
-The workspace contains two folders by default, where:
+MAC: cd ~\Downloads\Waste-code\src
+WINDOWS: cd ~\Downloads\Waste-code\src
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Then, compile the driver program:
+javac WasteDriver.java
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+After compiling, run the driver program:
+java WasteDriver
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Then, create objects in accordance to the type of waste being sorted,
+choose from either constructor:
 
-## Dependency Management
+If the type is plastic
+Waste objName = new Waste(PLASTIC) //It is required that the type is all caps
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+or if you have all the details:
+
+Waste objName = new Waste( types type, double weight, 
+double density, int lightSpectra,
+String color, String item,
+boolean isMagnetic, boolean isSinkable, 
+boolean isWaterproof, boolean isCompostable)
+
+General getters and mutators:
+GETTERS: - getType() - getNewType() - getWeight() - getLightSpectra() -
+getIsMagnetic() - getDensity() - getIsMeltable() - getIsCompostable() -
+getType(boolean val) - getCount() - getColor() - getItem() -
+getIsSinkable() - getIsWaterproof()
+
+SETTERS: - setLightSpectra(int lightSpectra) - setIsWterproof(boolean
+isWaterproof) - setIsSinkable(boolean isSinkable) - setColor(String
+color) - setItem(String item) - setType(types type) - setWeight(double
+weight) - setIsMagnetic(boolean isMagnetic) - setDensity(double density)
+
+Specified getters and mutators:
+METAL:
+GETTERS: getLightSpectra(), getWeight(), getIsRecyclable()
+SETTERS: setLightSpectra(int LightSpectrum)
+
+PLASTIC:
+GETTERS: getType(), getMeltable(), getWeight()
+SETTERS: setType(String type), setMeltable(boolean meltable)
+
+ORGANIC:
+GETTERS: getType(), getIsCompostable()
+SETTERS: setType(String type), setIsCompostable(boolean isCompostable)
+
+PAPER:
+GETTERS: getIsRecyclable(), getPaperType(), getAllPapers(), getPaperCategories()
+SETTERS: setIsRecyclable(boolean isRecycable), setPaperType(String paperType)
+
