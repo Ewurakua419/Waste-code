@@ -240,6 +240,7 @@ public class Waste {
                 type=types.PAPER;
             }
         }
+        /* 
         switch (type) {
                 case PLASTIC:
                     Plastic p1= new Plastic(newType);
@@ -258,6 +259,7 @@ public class Waste {
                     //leave as unknown
                     break;
         }
+                    */
         return getType();
     }
    
