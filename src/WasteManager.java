@@ -58,8 +58,10 @@ public class WasteManager implements FileOperations{
     public void saveToFile(String filename) throws IOException{
             // Use scanner to read patients data
             try(FileWriter files= new FileWriter(filename,true)){
-                files.write("\n"+wasteBinstr+"\n");
+                files.write("\n"+wasteBinstr);
                 files.close();
+                
+                
                 
                 
 
