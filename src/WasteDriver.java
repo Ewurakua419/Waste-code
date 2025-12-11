@@ -8,6 +8,7 @@ public class WasteDriver {
             w.checkType();
         }
         manager.create();
+        
         for (Plastic p : manager.plastics) {
             System.out.println(p.toString());
         }

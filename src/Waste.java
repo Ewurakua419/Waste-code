@@ -127,7 +127,7 @@ public class Waste {
     public String checkType(){
         if(color.toLowerCase().equals("black") && type==types.PLASTIC && item.toLowerCase().equals("bag")){
             System.out.println("Must not be recycled");
-            newType="Plastic, must not be recycled";
+            newType="Plastic";
         }
         else if (isWaterproof){//checks if either plastic or metal
             
@@ -307,7 +307,7 @@ public class Waste {
             while (scanner.hasNextLine()){
                 String line= scanner.nextLine();
                 String[] lines=line.split(",");
-                System.out.println(line);
+                //System.out.println(line);
                 if (lines.length==11){
                     typeStr=lines[0].strip().toLowerCase();
                     switch (typeStr) {
